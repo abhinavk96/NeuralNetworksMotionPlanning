@@ -1,5 +1,6 @@
 import pygame
 import sys
+import time
 from car import Car
 from obstacle import Obstacle
 
@@ -67,6 +68,7 @@ while carryOn:
     for car in collision_list:
         print("Car crash!")
         pygame.event.wait()
+        time.sleep(2)
         # End Of Game
         carryOn = False
 
