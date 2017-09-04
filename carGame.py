@@ -35,8 +35,12 @@ all_sprites_list.add(playerCar)
 
 # The obstacle sprite
 obstacle1 = Obstacle("obstacleType1.png", (200, 200))
+obstacle2 = Obstacle("obstacleType1.png", obstacle1.rect.topright)
+
 all_sprites_list.add(obstacle1)
 all_blocks_list.add(obstacle1)
+all_sprites_list.add(obstacle2)
+all_blocks_list.add(obstacle2)
 
 carryOn = True # Game state variable
 
