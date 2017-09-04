@@ -19,7 +19,7 @@ RED = (255, 0, 0)
 BROWN = (100,100,100)
 
 # Screen
-size = (900,400)
+size = (1200,800)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Basic Scenery")
 
@@ -34,14 +34,28 @@ all_blocks_list = pygame.sprite.Group()
 playerCar = Car("car.png", (100,100))
 all_sprites_list.add(playerCar)
 
+obstacles = {}
 # The obstacle sprite
-obstacle1 = Obstacle("obstacleType1.png", (200, 200))
-obstacle2 = Obstacle("obstacleType1.png", obstacle1.rect.topright)
+obstacles[0] = Obstacle("obstacleType1.png", (200, 200))
+all_sprites_list.add(obstacles[0])
+all_blocks_list.add(obstacles[0])
 
-all_sprites_list.add(obstacle1)
-all_blocks_list.add(obstacle1)
-all_sprites_list.add(obstacle2)
-all_blocks_list.add(obstacle2)
+for i in range(1, 10):
+    obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.topright)
+    all_sprites_list.add(obstacles[i])
+    all_blocks_list.add(obstacles[i])
+obstacles[10] = Obstacle("obstacleType1.png", obstacles[5].rect.bottomleft)
+all_sprites_list.add(obstacles[10])
+all_blocks_list.add(obstacles[10])
+for i in range(11, 16):
+    obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.bottomleft)
+    all_sprites_list.add(obstacles[i])
+    all_blocks_list.add(obstacles[i])
+# obstacle5 = Obstacle("obstacleType1.png", obstacle1.rect.bottomleft)
+# obstacle6 = Obstacle("obstacleType1.png", obstacle5.rect.topright)
+# obstacle7 = Obstacle("obstacleType1.png",obstacle6.rect.topright)
+# obstacle8 = Obstacle("obstacleType1.png", obstacle7.rect.topright)
+
 
 carryOn = True # Game state variable
 
