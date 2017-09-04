@@ -21,6 +21,11 @@ class Car(pygame.sprite.Sprite):
         self.rect.x += pixels*math.cos(math.radians(self.currentAngle))
         self.rect.y -= pixels*math.sin(math.radians(self.currentAngle))
 
+    def moveBackward(self, pixels):
+        print(self.currentAngle, math.sin(math.radians(self.currentAngle)), math.cos(math.radians(self.currentAngle)))
+        self.rect.x -= pixels * math.cos(math.radians(self.currentAngle))
+        self.rect.y += pixels * math.sin(math.radians(self.currentAngle))
+
     def rotateLeft(self, angle):
         print(self.currentAngle, math.sin(self.currentAngle), math.cos(self.currentAngle))
         self.currentAngle += angle

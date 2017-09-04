@@ -77,6 +77,9 @@ while carryOn:
 
     if keys[pygame.K_UP]:
         playerCar.moveForward(10)
+
+    if keys[pygame.K_DOWN]:
+        playerCar.moveBackward(10)
     collision_list = pygame.sprite.spritecollide(playerCar, all_blocks_list, False)
     all_sprites_list.update()
     # Drawing on Screen
