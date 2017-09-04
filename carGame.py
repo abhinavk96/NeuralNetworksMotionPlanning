@@ -18,11 +18,11 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BROWN = (100,100,100)
 
+background = pygame.image.load("bg1.png")
 # Screen
 size = (1200,800)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Basic Scenery")
-
 # List for all the sprites in the game
 
 all_sprites_list = pygame.sprite.Group()
@@ -83,11 +83,13 @@ while carryOn:
     collision_list = pygame.sprite.spritecollide(playerCar, all_blocks_list, False)
     all_sprites_list.update()
     # Drawing on Screen
-    screen.fill(GREEN)
+    # screen.fill(GREEN)
+    screen.blit(background, (0, 0))
+
     # Draw The Road
-    pygame.draw.rect(screen, BLACK, [40, 0, 200, 300])
+    # pygame.draw.rect(screen, BLACK, [40, 0, 200, 300])
     # Draw Line painting on the road
-    pygame.draw.line(screen, WHITE, [140, 0], [140, 300], 5)
+    # pygame.draw.line(screen, WHITE, [140, 0], [140, 300], 5)
 
     # Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
     all_sprites_list.draw(screen)
