@@ -1,6 +1,7 @@
 import pygame
 import sys
 from car import Car
+from obstacle import Obstacle
 checkErrors = pygame.init()
 if checkErrors[1] > 0:
     print("(!) Had {0} initializign errors...exiting".format(checkErrors[1]))
@@ -21,6 +22,10 @@ playerCar = Car("car.png", (100,100))
 # screen.blit(playerCar.image, playerCar.rect)
 all_sprites_list = pygame.sprite.Group()
 all_sprites_list.add(playerCar)
+obstacle1 = Obstacle("obstacleType1.png", (200, 200))
+all_sprites_list.add(obstacle1)
+all_blocks_list = pygame.sprite.Group()
+all_blocks_list.add(obstacle1)
 carryOn = True
 
 clock  = pygame.time.Clock()
@@ -30,8 +35,8 @@ while carryOn:
         if event.type == pygame.QUIT:
             carryOn = False
         elif event.type == pygame.KEYDOWN:
-            if event.key  == pygame.K_x:
-                carryOn=False
+            if event.key == pygame.K_x:
+                carryOn = False
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
         playerCar.rotateLeft(1)
@@ -39,6 +44,12 @@ while carryOn:
         playerCar.rotateRight(5)
     if keys[pygame.K_UP]:
         playerCar.moveForward(5)
+    collision_list = pygame.sprite.spritecollide(playerCar, all_blocks_list, False)
+    for car in collision_list:
+        print("Car crash!")
+        pygame.event.wait()
+        # End Of Game
+        carryOn = False
 
     all_sprites_list.update()
     # Drawing on Screen
