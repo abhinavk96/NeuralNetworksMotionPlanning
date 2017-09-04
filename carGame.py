@@ -78,14 +78,6 @@ while carryOn:
     if keys[pygame.K_UP]:
         playerCar.moveForward(10)
     collision_list = pygame.sprite.spritecollide(playerCar, all_blocks_list, False)
-
-    for car in collision_list:
-        print("Car crash!")
-        pygame.event.wait()
-        time.sleep(2)
-        # End Of Game
-        carryOn = False
-
     all_sprites_list.update()
     # Drawing on Screen
     screen.fill(GREEN)
@@ -99,5 +91,11 @@ while carryOn:
 
     # Refresh Screen
     pygame.display.flip()
-    clock.tick(60)
+    for car in collision_list:
+        print("Car crash!")
+        pygame.event.wait()
+        time.sleep(2)
+        # End Of Game
+        carryOn = False
+    clock.tick(90)
 pygame.quit()
