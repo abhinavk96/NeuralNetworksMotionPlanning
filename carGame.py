@@ -70,13 +70,13 @@ while carryOn:
                 carryOn = False
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        playerCar.rotateLeft(1)
+        playerCar.rotateLeft(5)
 
     if keys[pygame.K_RIGHT]:
         playerCar.rotateRight(5)
 
     if keys[pygame.K_UP]:
-        playerCar.moveForward(5)
+        playerCar.moveForward(10)
     collision_list = pygame.sprite.spritecollide(playerCar, all_blocks_list, False)
 
     for car in collision_list:
