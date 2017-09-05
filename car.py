@@ -1,5 +1,6 @@
 import pygame
 import math
+from PodSixNet.Connection import ConnectionListener, connection
 
 class Car(pygame.sprite.Sprite):
     def __init__(self, img, location):
@@ -9,6 +10,7 @@ class Car(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = location
         self.currentAngle = 0
+        # self.Connect()
 
     def moveRight(self, pixels):
         self.rect.x += pixels

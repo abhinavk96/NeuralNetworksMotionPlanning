@@ -5,6 +5,7 @@ import time
 from car import Car
 from obstacle import Obstacle
 
+
 class carGame(ConnectionListener):
     def __init__(self):
         self.checkErrors = pygame.init()
@@ -107,7 +108,11 @@ class carGame(ConnectionListener):
         self.carryOn = True  # Game state variable
 
         self.clock = pygame.time.Clock()
+        self.Connect()
+
     def update(self):
+        connection.Pump()
+        self.Pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.carryOn = False
@@ -162,5 +167,6 @@ game = carGame()
 
 while game.carryOn:
     game.update()
+    connection.Pump()
     
 pygame.quit()
