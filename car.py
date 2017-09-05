@@ -4,7 +4,7 @@ from PodSixNet.Connection import ConnectionListener, connection
 
 class Car(pygame.sprite.Sprite):
     def __init__(self, img, location):
-        super().__init__()
+        super(Car, self).__init__()
         self.image = pygame.image.load(img)
         self.cleanImage = self.image.copy()
         self.rect = self.image.get_rect()

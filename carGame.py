@@ -108,11 +108,15 @@ class carGame(ConnectionListener):
         self.carryOn = True  # Game state variable
 
         self.clock = pygame.time.Clock()
-        self.Connect()
-
+        self.running = False
+        try:
+            host, port = "localhost", 8000
+            self.Connect((host, int(port)))
+        except:
+            print ("Error Connecting to Server")
+            print("Usage:", "host:port")
+            print("e.g.", "localhost:31425")
     def update(self):
-        connection.Pump()
-        self.Pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.carryOn = False
@@ -167,6 +171,6 @@ game = carGame()
 
 while game.carryOn:
     game.update()
-    connection.Pump()
+    game.Pump()
     
 pygame.quit()
