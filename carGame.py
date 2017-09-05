@@ -4,6 +4,7 @@ import time
 from car import Car
 from obstacle import Obstacle
 
+
 checkErrors = pygame.init()
 if checkErrors[1] > 0:
     print("(!) Had {0} initializign errors...exiting".format(checkErrors[1]))
@@ -83,9 +84,6 @@ for i in range(71, 83):
     obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.bottomleft)
     all_sprites_list.add(obstacles[i])
     all_blocks_list.add(obstacles[i])
-obstacles[83] = Obstacle("obstacleType1.png", (600,100))
-all_sprites_list.add(obstacles[83])
-all_blocks_list.add(obstacles[83])
 obstacles[84] = Obstacle("obstacleType1.png", (40,400))
 all_sprites_list.add(obstacles[84])
 all_blocks_list.add(obstacles[84])
@@ -110,6 +108,48 @@ for i in range(92, 93):
 obstacles[93] = Obstacle("obstacleType1.png", (160,520))
 all_sprites_list.add(obstacles[93])
 all_blocks_list.add(obstacles[93])
+obstacles[94] = Obstacle("obstacleType1.png", (720,40))
+all_sprites_list.add(obstacles[94])
+all_blocks_list.add(obstacles[94])
+for i in range(95, 98):
+    obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.bottomleft)
+    all_sprites_list.add(obstacles[i])
+    all_blocks_list.add(obstacles[i])
+obstacles[98] = Obstacle("obstacleType1.png", (680,40))
+all_sprites_list.add(obstacles[98])
+all_blocks_list.add(obstacles[98])
+for i in range(99, 101):
+    obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.bottomleft)
+    all_sprites_list.add(obstacles[i])
+    all_blocks_list.add(obstacles[i])
+obstacles[101] = Obstacle("obstacleType1.png", (640,40))
+all_sprites_list.add(obstacles[101])
+all_blocks_list.add(obstacles[101])
+for i in range(102, 103):
+    obstacles[i] = Obstacle("obstacleType1.png", obstacles[i-1].rect.bottomleft)
+    all_sprites_list.add(obstacles[i])
+    all_blocks_list.add(obstacles[i])
+obstacles[103] = Obstacle("obstacleType1.png", (600,40))
+all_sprites_list.add(obstacles[103])
+all_blocks_list.add(obstacles[103])
+obstacles[104] = Obstacle("obstacleType1.png", (240,40))
+all_sprites_list.add(obstacles[104])
+all_blocks_list.add(obstacles[104])
+obstacles[105] = Obstacle("obstacleType1.png", (280,40))
+all_sprites_list.add(obstacles[105])
+all_blocks_list.add(obstacles[105])
+obstacles[106] = Obstacle("obstacleType1.png", (240,80))
+all_sprites_list.add(obstacles[106])
+all_blocks_list.add(obstacles[106])
+obstacles[107] = Obstacle("obstacleType1.png", (280,80))
+all_sprites_list.add(obstacles[107])
+all_blocks_list.add(obstacles[107])
+obstacles[108] = Obstacle("obstacleType1.png", (320,400))
+all_sprites_list.add(obstacles[108])
+all_blocks_list.add(obstacles[108])
+obstacles[109] = Obstacle("obstacleType1.png", (280,400))
+all_sprites_list.add(obstacles[109])
+all_blocks_list.add(obstacles[109])
 carryOn = True # Game state variable
 
 clock  = pygame.time.Clock()
