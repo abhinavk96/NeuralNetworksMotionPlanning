@@ -119,31 +119,31 @@ class carGame(ConnectionListener):
 		self.obstacles[101] = Obstacle("obstacleType1.png", (640,40))
 		self.all_sprites_list.add(self.obstacles[101])
 		self.all_blocks_list.add(self.obstacles[101])
-		for i in range(102, 103):
-    			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i-1].rect.bottomleft)
-    			self.all_sprites_list.add(self.obstacles[i])
-    			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[103] = Obstacle("obstacleType1.png", (600,40))
-		self.all_sprites_list.add(self.obstacles[103])
-		self.all_blocks_list.add(self.obstacles[103])
-		self.obstacles[104] = Obstacle("obstacleType1.png", (240,40))
-		self.all_sprites_list.add(self.obstacles[104])
-		self.all_blocks_list.add(self.obstacles[104])
-		self.obstacles[105] = Obstacle("obstacleType1.png", (280,40))
-		self.all_sprites_list.add(self.obstacles[105])
-		self.all_blocks_list.add(self.obstacles[105])
-		self.obstacles[106] = Obstacle("obstacleType1.png", (240,80))
-		self.all_sprites_list.add(self.obstacles[106])
-		self.all_blocks_list.add(self.obstacles[106])
-		self.obstacles[107] = Obstacle("obstacleType1.png", (280,80))
-		self.all_sprites_list.add(self.obstacles[107])
-		self.all_blocks_list.add(self.obstacles[107])
-		self.obstacles[108] = Obstacle("obstacleType1.png", (320,400))
-		self.all_sprites_list.add(self.obstacles[108])
-		self.all_blocks_list.add(self.obstacles[108])
-		self.obstacles[109] = Obstacle("obstacleType1.png", (280,400))
-		self.all_sprites_list.add(self.obstacles[109])
-		self.all_blocks_list.add(self.obstacles[109])
+		# for i in range(102, 103):
+    		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i-1].rect.bottomleft)
+    		# 	self.all_sprites_list.add(self.obstacles[i])
+    		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[103] = Obstacle("obstacleType1.png", (600,40))
+		# self.all_sprites_list.add(self.obstacles[103])
+		# self.all_blocks_list.add(self.obstacles[103])
+		# self.obstacles[104] = Obstacle("obstacleType1.png", (240,40))
+		# self.all_sprites_list.add(self.obstacles[104])
+		# self.all_blocks_list.add(self.obstacles[104])
+		# self.obstacles[105] = Obstacle("obstacleType1.png", (280,40))
+		# self.all_sprites_list.add(self.obstacles[105])
+		# self.all_blocks_list.add(self.obstacles[105])
+		# self.obstacles[106] = Obstacle("obstacleType1.png", (240,80))
+		# self.all_sprites_list.add(self.obstacles[106])
+		# self.all_blocks_list.add(self.obstacles[106])
+		# self.obstacles[107] = Obstacle("obstacleType1.png", (280,80))
+		# self.all_sprites_list.add(self.obstacles[107])
+		# self.all_blocks_list.add(self.obstacles[107])
+		# self.obstacles[108] = Obstacle("obstacleType1.png", (320,400))
+		# self.all_sprites_list.add(self.obstacles[108])
+		# self.all_blocks_list.add(self.obstacles[108])
+		# self.obstacles[109] = Obstacle("obstacleType1.png", (280,400))
+		# self.all_sprites_list.add(self.obstacles[109])
+		# self.all_blocks_list.add(self.obstacles[109])
 	
 		self.carryOn = True  # Game state variable
 
@@ -166,10 +166,10 @@ class carGame(ConnectionListener):
 			self.playerCar.rotateRight(5)
 
 		if keys[pygame.K_UP]:
-			self.playerCar.moveForward(10)
+			self.playerCar.moveForward(2)
 
 		if keys[pygame.K_DOWN]:
-			self.playerCar.moveBackward(10)
+			self.playerCar.moveBackward(2)
 		collision_list = pygame.sprite.spritecollide(self.playerCar, self.all_blocks_list, False)
 		self.all_sprites_list.update()
 		# Drawing on Screen
@@ -201,7 +201,7 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BROWN = (100,100,100)
-
+goal = (500, 500)
 game = carGame()
 
 while game.carryOn:

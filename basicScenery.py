@@ -3,7 +3,7 @@ import sys
 
 checkErrors = pygame.init()
 if checkErrors[1] > 0:
-    print("(!) Had {0} initializign errors...exiting".format(checkErrors[1]))
+    print("(!) Had {0} initialising errors...exiting".format(checkErrors[1]))
     sys.exit(-1)
 else:
     print("(+) Game initialized successfully")
@@ -28,7 +28,7 @@ while carryOn:
         if event.type == pygame.QUIT:
             carryOn = False
 
-        screen.fill(WHITE)
+        screen.fill(BLACK)
         pygame.draw.rect(screen, GREEN, [0, 250, 900, 400],0)
         pygame.draw.rect(screen, BROWN, [500,150,40,100], 0)
         pygame.draw.line(screen, GREEN, [0, 0], [100, 100], 5)
