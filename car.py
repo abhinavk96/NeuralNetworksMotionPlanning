@@ -25,6 +25,10 @@ class Car(pygame.sprite.Sprite):
         # print(self.width, self.height)
 
         self.bottomright=(self.rect.centerx + self.cornersensor*math.sin(math.radians(self.currentAngle)+self.geometricangle) ,self.rect.centery+self.cornersensor*math.cos(math.radians(self.currentAngle)+self.geometricangle))
+        self.topright=(self.bottomright[0]-self.height*math.sin(math.radians(self.currentAngle)), self.bottomright[1]-self.height*math.cos(math.radians(self.currentAngle)))
+        self.bottomleft=(self.bottomright[0]-self.width*math.cos(math.radians(self.currentAngle)), self.bottomright[1]+self.width*math.sin(math.radians(self.currentAngle)))
+        self.topleft=(self.rect.centerx - self.cornersensor*math.sin(math.radians(self.currentAngle)+self.geometricangle) ,self.rect.centery-self.cornersensor*math.cos(math.radians(self.currentAngle)+self.geometricangle))
+
         # self.bottomleft=(self.rect.centerx - self.cornersensor*math.sin(math.radians(self.currentAngle)+self.geometricangle) ,self.rect.centery+self.cornersensor*math.cos(math.radians(self.currentAngle)+self.geometricangle))
         # print(5)
     def moveRight(self, pixels):
