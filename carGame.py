@@ -32,7 +32,7 @@ class carGame(ConnectionListener):
 
         self.obstacles = {}
         # The obstacle sprite
-        self.obstacles[0] = Obstacle("obstacleType1.png", (300, 200))
+        """self.obstacles[0] = Obstacle("obstacleType1.png", (300, 200))
         self.all_sprites_list.add(self.obstacles[0])
         self.all_blocks_list.add(self.obstacles[0])
 
@@ -46,7 +46,7 @@ class carGame(ConnectionListener):
         for i in range(11, 14):
             self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
             self.all_sprites_list.add(self.obstacles[i])
-            self.all_blocks_list.add(self.obstacles[i])
+            self.all_blocks_list.add(self.obstacles[i])"""
 
         self.obstacles[16] = Obstacle("obstacleType1.png", (0, 0))
         self.all_sprites_list.add(self.obstacles[16])
@@ -71,8 +71,7 @@ class carGame(ConnectionListener):
             self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright)
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])
-
-        self.obstacles[70] = Obstacle("obstacleType1.png", self.obstacles[35].rect.bottomleft)
+        """self.obstacles[70] = Obstacle("obstacleType1.png", self.obstacles[35].rect.bottomleft)
         self.all_sprites_list.add(self.obstacles[70])
         self.all_blocks_list.add(self.obstacles[70])
         for i in range(71, 83):
@@ -123,11 +122,8 @@ class carGame(ConnectionListener):
         for i in range(102, 103):
             self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
             self.all_sprites_list.add(self.obstacles[i])
-            self.all_blocks_list.add(self.obstacles[i])
-        self.obstacles[103] = Obstacle("obstacleType1.png", (600, 40))
-        self.all_sprites_list.add(self.obstacles[103])
-        self.all_blocks_list.add(self.obstacles[103])
-        self.obstacles[104] = Obstacle("obstacleType1.png", (240, 40))
+            self.all_blocks_list.add(self.obstacles[i])"""
+        """self.obstacles[104] = Obstacle("obstacleType1.png", (240, 40))
         self.all_sprites_list.add(self.obstacles[104])
         self.all_blocks_list.add(self.obstacles[104])
         self.obstacles[105] = Obstacle("obstacleType1.png", (280, 40))
@@ -138,7 +134,7 @@ class carGame(ConnectionListener):
         self.all_blocks_list.add(self.obstacles[106])
         self.obstacles[107] = Obstacle("obstacleType1.png", (280, 80))
         self.all_sprites_list.add(self.obstacles[107])
-        self.all_blocks_list.add(self.obstacles[107])
+        self.all_blocks_list.add(self.obstacles[107])"""
         self.obstacles[108] = Obstacle("obstacleType1.png", (320, 400))
         self.all_sprites_list.add(self.obstacles[108])
         self.all_blocks_list.add(self.obstacles[108])
