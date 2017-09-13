@@ -2,6 +2,8 @@ import pygame
 from PodSixNet.Connection import ConnectionListener, connection
 import sys
 import time
+import math
+from goal import Goal
 from car import Car
 from obstacle import Obstacle
 
@@ -28,24 +30,25 @@ class carGame(ConnectionListener):
 
 		self.playerCar = Car("car.png", (100, 100))
 		self.all_sprites_list.add(self.playerCar)
-
-		self.obstacles = {}
+		self.goalX = Goal("goalx.png", (694, 490))
+		self.all_sprites_list.add(self.goalX)
+		self.obstacles = [None] * 1000
 		# The obstacle sprite
-		self.obstacles[0] = Obstacle("obstacleType1.png", (300, 200))
-		self.all_sprites_list.add(self.obstacles[0])
-		self.all_blocks_list.add(self.obstacles[0])
+		# self.obstacles[0] = Obstacle("obstacleType1.png", (300, 200))
+		# self.all_sprites_list.add(self.obstacles[0])
+		# self.all_blocks_list.add(self.obstacles[0])
 
-		for i in range(1, 6):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[10] = Obstacle("obstacleType1.png", self.obstacles[5].rect.bottomleft)
-		self.all_sprites_list.add(self.obstacles[10])
-		self.all_blocks_list.add(self.obstacles[10])
-		for i in range(11, 14):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
+		# for i in range(1, 6):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[10] = Obstacle("obstacleType1.png", self.obstacles[5].rect.bottomleft)
+		# self.all_sprites_list.add(self.obstacles[10])
+		# self.all_blocks_list.add(self.obstacles[10])
+		# for i in range(11, 14):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
 
 		self.obstacles[16] = Obstacle("obstacleType1.png", (0, 0))
 		self.all_sprites_list.add(self.obstacles[16])
@@ -78,51 +81,64 @@ class carGame(ConnectionListener):
 			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
 			self.all_sprites_list.add(self.obstacles[i])
 			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[84] = Obstacle("obstacleType1.png", (40, 400))
-		self.all_sprites_list.add(self.obstacles[84])
-		self.all_blocks_list.add(self.obstacles[84])
-		for i in range(85, 88):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[88] = Obstacle("obstacleType1.png", (80, 440))
-		self.all_sprites_list.add(self.obstacles[88])
-		self.all_blocks_list.add(self.obstacles[88])
-		for i in range(89, 91):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[91] = Obstacle("obstacleType1.png", (120, 480))
-		self.all_sprites_list.add(self.obstacles[91])
-		self.all_blocks_list.add(self.obstacles[91])
-		for i in range(92, 93):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[93] = Obstacle("obstacleType1.png", (160, 520))
-		self.all_sprites_list.add(self.obstacles[93])
-		self.all_blocks_list.add(self.obstacles[93])
-		self.obstacles[94] = Obstacle("obstacleType1.png", (720, 40))
-		self.all_sprites_list.add(self.obstacles[94])
-		self.all_blocks_list.add(self.obstacles[94])
-		for i in range(95, 98):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[98] = Obstacle("obstacleType1.png", (680,40))
-		self.all_sprites_list.add(self.obstacles[98])
-		self.all_blocks_list.add(self.obstacles[98])
-		for i in range(99, 101):
-			self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i-1].rect.bottomleft)
-			self.all_sprites_list.add(self.obstacles[i])
-			self.all_blocks_list.add(self.obstacles[i])
-		self.obstacles[101] = Obstacle("obstacleType1.png", (640,40))
-		self.all_sprites_list.add(self.obstacles[101])
-		self.all_blocks_list.add(self.obstacles[101])
+		# self.obstacles[84] = Obstacle("obstacleType1.png", (40, 400))
+		# self.all_sprites_list.add(self.obstacles[84])
+		# self.all_blocks_list.add(self.obstacles[84])
+		# for i in range(85, 88):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[88] = Obstacle("obstacleType1.png", (80, 440))
+		# self.all_sprites_list.add(self.obstacles[88])
+		# self.all_blocks_list.add(self.obstacles[88])
+		# for i in range(89, 91):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[91] = Obstacle("obstacleType1.png", (120, 480))
+		# self.all_sprites_list.add(self.obstacles[91])
+		# self.all_blocks_list.add(self.obstacles[91])
+		# for i in range(92, 93):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[93] = Obstacle("obstacleType1.png", (160, 520))
+		# self.all_sprites_list.add(self.obstacles[93])
+		# self.all_blocks_list.add(self.obstacles[93])
+		# self.obstacles[94] = Obstacle("obstacleType1.png", (720, 40))
+		# self.all_sprites_list.add(self.obstacles[94])
+		# self.all_blocks_list.add(self.obstacles[94])
+		# for i in range(95, 98):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[98] = Obstacle("obstacleType1.png", (680,40))
+		# self.all_sprites_list.add(self.obstacles[98])
+		# self.all_blocks_list.add(self.obstacles[98])
+		# for i in range(99, 101):
+		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i-1].rect.bottomleft)
+		# 	self.all_sprites_list.add(self.obstacles[i])
+		# 	self.all_blocks_list.add(self.obstacles[i])
+		# self.obstacles[101] = Obstacle("obstacleType1.png", (640,40))
+		# self.all_sprites_list.add(self.obstacles[101])
+		# self.all_blocks_list.add(self.obstacles[101])
 		# for i in range(102, 103):
     		# 	self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i-1].rect.bottomleft)
     		# 	self.all_sprites_list.add(self.obstacles[i])
     		# 	self.all_blocks_list.add(self.obstacles[i])
+
+		self.obstacles[0] = Obstacle("square.png",(245, 160))
+		self.all_sprites_list.add(self.obstacles[0])
+		self.all_blocks_list.add(self.obstacles[0])
+
+		self.obstacles[1] = Obstacle("square.png", (525, 300))
+		self.all_sprites_list.add(self.obstacles[1])
+		self.all_blocks_list.add(self.obstacles[1])
+
+		# self.obstacles[2] = Obstacle("square.png", (400, 350))
+		# self.all_sprites_list.add(self.obstacles[0])
+		# self.all_blocks_list.add(self.obstacles[0])
+
 		# self.obstacles[103] = Obstacle("obstacleType1.png", (600,40))
 		# self.all_sprites_list.add(self.obstacles[103])
 		# self.all_blocks_list.add(self.obstacles[103])
@@ -149,6 +165,9 @@ class carGame(ConnectionListener):
 
 		self.clock = pygame.time.Clock()
 		self.Connect()
+	def calculateDist(self, carCenter, sol):
+		return math.sqrt((carCenter[0] - sol[0]) ** 2 + (carCenter[1] - sol[1]) ** 2)
+
 	def update(self):
 		connection.Pump()
 		self.Pump()
@@ -160,16 +179,24 @@ class carGame(ConnectionListener):
 					self.carryOn = False
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_LEFT]:
-			self.playerCar.rotateLeft(5)
+			distList = self.getSolution(self.playerCar, self.obstacles)
+			self.playerCar.rotateLeft(3,distList, self.goalX.rect.center)
 
 		if keys[pygame.K_RIGHT]:
-			self.playerCar.rotateRight(5)
+			distList = self.getSolution(self.playerCar, self.obstacles)
+			self.playerCar.rotateRight(3, distList, self.goalX.rect.center)
 
 		if keys[pygame.K_UP]:
-			self.playerCar.moveForward(2)
+			distList = self.getSolution(self.playerCar, self.obstacles)
+			self.playerCar.moveForward(2, distList, self.goalX.rect.center)
 
 		if keys[pygame.K_DOWN]:
-			self.playerCar.moveBackward(2)
+			distList = self.getSolution(self.playerCar, self.obstacles)
+			self.playerCar.moveBackward(2, distList, self.goalX.rect.center)
+		goal_check = pygame.sprite.spritecollide(self.playerCar, [self.goalX], False)
+		for car in goal_check:
+			print("Mission Accomplished")
+			self.carryOn = False
 		collision_list = pygame.sprite.spritecollide(self.playerCar, self.all_blocks_list, False)
 		self.all_sprites_list.update()
 		# Drawing on Screen
@@ -187,13 +214,69 @@ class carGame(ConnectionListener):
 		# Refresh Screen
 		pygame.display.flip()
 		self.clock.tick(90)
+
 		for car in collision_list:
 			print("Car crash!")
 			pygame.event.wait()
 			time.sleep(2)
 			# End Of Game
 			self.carryOn = False
+	def getSolution(self, car, obstacleList):
+		distList = []
+		for obs in obstacleList:
+			if obs is None:
+				continue
+			for k in range(len(car.line)):
+				tempDist = []
+				for j in range(len(obs.line)):
+					if self.isSolutionExists(car.line[k], obs.line[j]):
+						sol = self.pointOfIntersection(car.line[k], obs.line[j])
+						if j == 0:
+							if sol == obs.rect.topleft or sol == obs.rect.topright:
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+							elif self.isLambda(obs.rect.topleft, obs.rect.topright, sol):
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+						elif j == 1:
+							if sol == obs.rect.bottomleft or sol == obs.rect.bottomright:
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+							elif self.isLambda(obs.rect.bottomleft, obs.rect.bottomright, sol):
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+						elif j == 2:
+							if sol == obs.rect.topleft or sol == obs.rect.bottomleft:
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+							elif self.isLambda(obs.rect.topleft, obs.rect.bottomleft, sol):
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+						elif j == 3:
+							if sol == obs.rect.bottomright or sol == obs.rect.topright:
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+							elif self.isLambda(obs.rect.bottomright, obs.rect.topright, sol):
+								tempDist.append(self.calculateDist(car.rect.center, sol))
+				if len(tempDist) > 0:
+					distList.append(min(tempDist))
+		return distList
 
+	def isSolutionExists(self, lineA, lineB):
+		if (((lineA[0] * lineB[1]) - (lineA[1] * lineB[0])) == 0):
+			return False
+		else:
+			return True
+
+	def pointOfIntersection(self, lineA, lineB):
+		x = ((lineA[1] * lineB[2]) - (lineA[2] * lineB[1])) / ((lineA[0] * lineB[1]) - (lineB[0] * lineA[1]))
+		y = ((lineA[2] * lineB[0]) - (lineA[0] * lineB[2])) / ((lineA[0] * lineB[1]) - (lineB[0] * lineA[1]))
+		return x, y
+
+	def isLambda(self, A, B, sol):
+		if sol[0] == B[0]:
+			if 0 <= (A[1] - sol[1]) / (sol[1] - B[1]) <= 1:
+				return True
+			else:
+				False
+		else:
+			if 0 <= (A[0] - sol[0]) / (sol[0] - B[0]) <= 1:
+				return True
+			else:
+				False
 
 # Define some colors
 BLACK = (0, 0, 0)
