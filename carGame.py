@@ -160,31 +160,41 @@ class carGame(ConnectionListener):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x:
                     self.carryOn = False
+        self.playerCar.previousDistance=self.playerCar.getGoalDistance()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.playerCar.rotateLeft(1)
+            print(self.playerCar.getCurrentReward())
 
         if keys[pygame.K_RIGHT]:
             self.playerCar.rotateRight(1)
+            print(self.playerCar.getCurrentReward())
+
         # self.screen.blit(surf,(100,100))
 
         if keys[pygame.K_UP]:
             self.playerCar.moveForward(10)
+            print(self.playerCar.getCurrentReward())
+
 
         if keys[pygame.K_DOWN]:
             self.playerCar.moveBackward(1)
+            print(self.playerCar.getCurrentReward())
+
+        reward=self.playerCar.getGoalDistance()-self.playerCar.previousDistance
+
         if keys[pygame.K_p]:
             print("\nTop left: ", self.playerCar.rect.topleft, "\nBottom Left:" ,self.playerCar.rect.bottomleft,"\nBottom Right:" , self.playerCar.rect.bottomright,
                   "\nTop Right:",self.playerCar.rect.topright)
             print("\nAngle:" ,self.playerCar.currentAngle,"\nTop Left:" ,self.playerCar.topleft, "\nBottom Left:" ,self.playerCar.bottomleft,"\nBottom Right:" , self.playerCar.bottomright,
                   "\nTop right:",self.playerCar.topright)
+        if keys[pygame.K_g]:
+            x, y = self.playerCar.rect.x, self.playerCar.rect.y
+            print("Distance:", math.hypot(x - self.playerCar.goal[0], y - self.playerCar.goal[1]))
 
-        x, y = self.playerCar.rect.x, self.playerCar.rect.y
         self.screen.blit(self.playerCar.image, self.playerCar.rect.topleft)
 
 
-        goal = (750, 550)
-        # print ("Distance:", math.hypot(x - goal[0], y - goal[1]))
 
         self.playerCar.updateSensors()
         self.all_sprites_list.update()
