@@ -5,7 +5,7 @@ import time
 import math
 from car import Car
 from obstacle import Obstacle
-
+from goal import Goal
 
 class carGame(ConnectionListener):
     def __init__(self):
@@ -27,8 +27,10 @@ class carGame(ConnectionListener):
 
         # The player sprite
 
-        self.playerCar = Car("car.png", (100, 100))
+        self.playerCar = Car("car.png", (100, 200))
         self.all_sprites_list.add(self.playerCar)
+        self.goals = Goal("track_goal.png", (720,200))
+        self.all_sprites_list.add(self.goals)
 
         self.obstacles = {}
         # The obstacle sprite
@@ -135,10 +137,10 @@ class carGame(ConnectionListener):
         self.obstacles[107] = Obstacle("obstacleType1.png", (280, 80))
         self.all_sprites_list.add(self.obstacles[107])
         self.all_blocks_list.add(self.obstacles[107])"""
-        self.obstacles[108] = Obstacle("obstacleType1.png", (320, 400))
+        self.obstacles[108] = Obstacle("obstacleType1.png", (300, 200))
         self.all_sprites_list.add(self.obstacles[108])
         self.all_blocks_list.add(self.obstacles[108])
-        self.obstacles[109] = Obstacle("obstacleType1.png", (280, 400))
+        self.obstacles[109] = Obstacle("obstacleType1.png", (300, 240))
         self.all_sprites_list.add(self.obstacles[109])
         self.all_blocks_list.add(self.obstacles[109])
 
