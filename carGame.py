@@ -159,10 +159,12 @@ class carGame(ConnectionListener):
                 if event.key == pygame.K_x:
                     self.carryOn = False
         self.playerCar.previousDistance=self.playerCar.getGoalDistance()
+        self.playerCar.previousAngle=self.playerCar.getAngles()
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.playerCar.rotateLeft(1)
-            print(self.playerCar.getCurrentReward())
+            # print(self.playerCar.getCurrentReward())
+            print(math.degrees(self.playerCar.getAngles()))
 
         if keys[pygame.K_RIGHT]:
             self.playerCar.rotateRight(1)
@@ -179,7 +181,7 @@ class carGame(ConnectionListener):
             self.playerCar.moveBackward(1)
             print(self.playerCar.getCurrentReward())
 
-        reward=self.playerCar.getGoalDistance()-self.playerCar.previousDistance
+        # reward=self.playerCar.getGoalDistance()-self.playerCar.previousDistance
 
         if keys[pygame.K_p]:
             print("\nTop left: ", self.playerCar.rect.topleft, "\nBottom Left:" ,self.playerCar.rect.bottomleft,"\nBottom Right:" , self.playerCar.rect.bottomright,

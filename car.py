@@ -23,8 +23,9 @@ class Car(pygame.sprite.Sprite):
         self.bottomright = self.rect.bottomright
         self.screen = pygame.display.get_surface()
         self.currentAngle = 0
-        self.goal = (750, 550)
+        self.goal = (600, 100)
         self.previousDistance = math.hypot(self.rect.centerx - self.goal[0], self.rect.centery - self.goal[1])
+        self.previousAngle = 0
 
     def getGoalDistance(self):
         return math.hypot(self.rect.centerx - self.goal[0], self.rect.centery - self.goal[1])
@@ -40,6 +41,7 @@ class Car(pygame.sprite.Sprite):
         self.topleft = (
         self.rect.centerx - self.cornersensor * math.sin(math.radians(self.currentAngle) + self.geometricangle),
         self.rect.centery - self.cornersensor * math.cos(math.radians(self.currentAngle) + self.geometricangle))
+        # self.topmid=((self.topleft[0]+self.topright[0])/2, (self.topleft[1]+self.topright[1])/2)
 
 
         # self.bottomleft=(self.rect.centerx - self.cornersensor*math.sin(math.radians(self.currentAngle)+self.geometricangle) ,self.rect.centery+self.cornersensor*math.cos(math.radians(self.currentAngle)+self.geometricangle))
@@ -47,6 +49,11 @@ class Car(pygame.sprite.Sprite):
 
     def getCurrentReward(self):
         return self.previousDistance - self.getGoalDistance()
+    def getAngles(self):
+        alpha = math.atan2(self.goal[1] - self.rect.y, self.goal[0]- self.rect.x)
+        # print(math.degrees(alpha), self.currentAngle)
+        return math.atan2(math.sin(math.radians(self.currentAngle)-alpha), math.cos(math.radians(self.currentAngle)-alpha))
+
 
     def moveRight(self, pixels):
         self.rect.x += pixels
