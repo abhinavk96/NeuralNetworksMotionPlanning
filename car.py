@@ -22,7 +22,7 @@ class Car(pygame.sprite.Sprite):
         self.bottomright = self.rect.bottomright
         self.screen = pygame.display.get_surface()
         self.currentAngle = 0
-        self.goal = (600, 100)
+        self.goal = (300, 120)
         self.previousDistance = math.hypot(self.rect.centerx - self.goal[0], self.rect.centery - self.goal[1])
         self.previousAngle = 0
 
@@ -51,7 +51,14 @@ class Car(pygame.sprite.Sprite):
     def getAngles(self):
         alpha = math.atan2(self.goal[1] - self.rect.y, self.goal[0]- self.rect.x)
         # print(math.degrees(alpha), self.currentAngle)
-        return math.atan2(math.sin(math.radians(self.currentAngle)-alpha), math.cos(math.radians(self.currentAngle)-alpha))
+        normalizedAngle=self.currentAngle
+        # print("Current angle", normalizedAngle)
+        # if self.currentAngle > 180:
+        #     normalizedAngle= -(360-self.currentAngle)
+
+        # return math.degrees(alpha) - normalizedAngle
+
+        return math.atan2(math.sin(math.radians(normalizedAngle)-alpha), math.cos(math.radians(normalizedAngle)-alpha))
 
 
     def moveRight(self, pixels):

@@ -26,6 +26,8 @@ class carGame():
 
         self.all_sprites_list = pygame.sprite.Group()
         self.all_blocks_list = pygame.sprite.Group()
+        self.all_goals_list = pygame.sprite.Group()
+
 
         # The player sprite
 
@@ -33,6 +35,7 @@ class carGame():
         self.all_sprites_list.add(self.playerCar)
         self.goals = Goal("track_goal.png", (300, 120))
         self.all_sprites_list.add(self.goals)
+        self.all_goals_list.add(self.goals)
 
         self.obstacles = {}
         # The obstacle sprite
@@ -212,9 +215,14 @@ class carGame():
         # Refresh Screen
         self.clock.tick(90)
         collision_list = pygame.sprite.spritecollide(self.playerCar, self.all_blocks_list, False)
-        reward = (self.playerCar.previousDistance - self.playerCar.getGoalDistance() * 100) + self.playerCar.getAngles()*10
+        goal_list=pygame.sprite.spritecollide(self.playerCar, self.all_goals_list, False)
+
+
+        reward = (self.playerCar.previousDistance - self.playerCar.getGoalDistance()) * 10 + math.degrees(self.playerCar.getAngles())
+        for goal in goal_list:
+            reward=10000
         for car in collision_list:
-            reward=-500
+            reward=-1000
 
             # if math.hypot(collision_list[0].rect.topleft[0] - self.playerCar.bottomleft[0], collision_list[0].rect.topleft[1] - self.playerCar.bottomleft[1]) < min(self.playerCar.height-20,self.playerCar.width-20):
             #     self.playerCar.moveForward(10)
