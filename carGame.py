@@ -29,9 +29,9 @@ class carGame():
 
         # The player sprite
 
-        self.playerCar = Car("car.png", (100, 200))
+        self.playerCar = Car("car.png", (300, 500))
         self.all_sprites_list.add(self.playerCar)
-        self.goals = Goal("track_goal.png", (720, 200))
+        self.goals = Goal("track_goal.png", (300, 120))
         self.all_sprites_list.add(self.goals)
 
         self.obstacles = {}
@@ -52,37 +52,37 @@ class carGame():
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])"""
 
-        self.obstacles[16] = Obstacle("obstacleType1.png", (0, 0))
+        self.obstacles[16] = Obstacle("obstacleType1.png", (0, 0), "top")
         self.all_sprites_list.add(self.obstacles[16])
         self.all_blocks_list.add(self.obstacles[16])
         for i in range(17, 36):
-            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright)
+            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright, "top")
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])
 
-        self.obstacles[37] = Obstacle("obstacleType1.png", self.obstacles[16].rect.bottomleft)
+        self.obstacles[37] = Obstacle("obstacleType1.png", self.obstacles[16].rect.bottomleft, "left")
         self.all_sprites_list.add(self.obstacles[37])
         self.all_blocks_list.add(self.obstacles[37])
         for i in range(38, 51):
-            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft, "left")
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])
 
-        self.obstacles[51] = Obstacle("obstacleType1.png", self.obstacles[50].rect.topright)
+        self.obstacles[51] = Obstacle("obstacleType1.png", self.obstacles[50].rect.topright, "bottom")
         self.all_sprites_list.add(self.obstacles[51])
         self.all_blocks_list.add(self.obstacles[51])
         for i in range(52, 70):
-            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright)
+            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.topright, "bottom")
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])
-        """self.obstacles[70] = Obstacle("obstacleType1.png", self.obstacles[35].rect.bottomleft)
+        self.obstacles[70] = Obstacle("obstacleType1.png", self.obstacles[35].rect.bottomleft, "right")
         self.all_sprites_list.add(self.obstacles[70])
         self.all_blocks_list.add(self.obstacles[70])
         for i in range(71, 83):
-            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft)
+            self.obstacles[i] = Obstacle("obstacleType1.png", self.obstacles[i - 1].rect.bottomleft, "right")
             self.all_sprites_list.add(self.obstacles[i])
             self.all_blocks_list.add(self.obstacles[i])
-        self.obstacles[84] = Obstacle("obstacleType1.png", (40, 400))
+        """self.obstacles[84] = Obstacle("obstacleType1.png", (40, 400))
         self.all_sprites_list.add(self.obstacles[84])
         self.all_blocks_list.add(self.obstacles[84])
         for i in range(85, 88):
@@ -173,22 +173,23 @@ class carGame():
         # if keys[pygame.K_LEFT]:
         #     self.playerCar.rotateLeft(1)
         #     # print(self.playerCar.getCurrentReward())
-        #     print(math.degrees(self.playerCar.getAngles()))
+        #     # print(math.degrees(self.playerCar.getAngles()))
         #
         # if keys[pygame.K_RIGHT]:
         #     self.playerCar.rotateRight(1)
-        #     print(self.playerCar.getCurrentReward())
+        #     # print(self.playerCar.getCurrentReward())
         #
         # # self.screen.blit(surf,(100,100))
         #
         # if keys[pygame.K_UP]:
         #     self.playerCar.moveForward(10)
-        #     print(self.playerCar.getCurrentReward())
+        #     # print(self.playerCar.getCurrentReward())
         #
         #
         # if keys[pygame.K_DOWN]:
         #     self.playerCar.moveBackward(1)
-        #     print(self.playerCar.getCurrentReward())
+        #     # print(self.playerCar.getCurrentReward())
+
         self.makeMove(action)
 
         # if keys[pygame.K_p]:
@@ -214,6 +215,24 @@ class carGame():
         reward = (self.playerCar.previousDistance - self.playerCar.getGoalDistance() * 100) + self.playerCar.getAngles()*10
         for car in collision_list:
             reward=-500
+
+            # if math.hypot(collision_list[0].rect.topleft[0] - self.playerCar.bottomleft[0], collision_list[0].rect.topleft[1] - self.playerCar.bottomleft[1]) < min(self.playerCar.height-20,self.playerCar.width-20):
+            #     self.playerCar.moveForward(10)
+            # else:
+            #     self.playerCar.moveBackward(10)
+            if (collision_list[0].boundary=='top' and math.sin(math.radians(self.playerCar.currentAngle)) > 0 ) or (collision_list[0].boundary=='bottom' and math.sin(math.radians(self.playerCar.currentAngle)) < 0 ):
+                self.playerCar.moveBackward(20)
+            elif (collision_list[0].boundary=='top' and math.sin(math.radians(self.playerCar.currentAngle)) < 0 ) or (collision_list[0].boundary=='bottom' and math.sin(math.radians(self.playerCar.currentAngle)) > 0 ):
+                self.playerCar.moveForward(20)
+            elif (collision_list[0].boundary=='left' and math.cos(math.radians(self.playerCar.currentAngle)) < 0 ) or (collision_list[0].boundary=='right' and math.cos(math.radians(self.playerCar.currentAngle)) > 0 ):
+                self.playerCar.moveBackward(20)
+            elif (collision_list[0].boundary=='left' and math.cos(math.radians(self.playerCar.currentAngle)) > 0 ) or (collision_list[0].boundary=='right' and math.sin(math.radians(self.playerCar.currentAngle)) < 0 ):
+                self.playerCar.moveForward(20)
+            else:
+                self.playerCar.moveBackward(20)
+            if self.playerCar.rect.centerx < 0 or self.playerCar.rect.centerx> 810 or self.playerCar.rect.centery<0 or self.playerCar.rect.centery>600:
+                self.playerCar.rect.centerx,self.playerCar.rect.centery = (300, 500)
+
             # print("Car crash!")
         # End Of Game
         # self.carryOn = False
@@ -233,7 +252,7 @@ BROWN = (100, 100, 100)
 if __name__ == "__main__":
     game_state = carGame()
     while True:
-        game_state.frame_step((random.randint(0, 2)))
+        game_state.update((random.randint(0, 2)))
 
 # while game.carryOn:
 #     game.update()
