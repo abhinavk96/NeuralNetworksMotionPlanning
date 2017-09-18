@@ -211,7 +211,7 @@ class carGame():
         # Refresh Screen
         self.clock.tick(90)
         collision_list = pygame.sprite.spritecollide(self.playerCar, self.all_blocks_list, False)
-        reward = self.playerCar.previousDistance - self.playerCar.getGoalDistance()
+        reward = (self.playerCar.previousDistance - self.playerCar.getGoalDistance() * 100) + self.playerCar.getAngles()*10
         for car in collision_list:
             reward=-500
             # print("Car crash!")
@@ -219,7 +219,7 @@ class carGame():
         # self.carryOn = False
         state = np.array([[self.playerCar.getGoalDistance(), self.playerCar.getAngles()]])
         pygame.display.flip()
-        print(reward)   
+        print(reward)
         return reward, state
 
 
@@ -230,9 +230,10 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BROWN = (100, 100, 100)
 #
-game_state = carGame()
-while True:
-    game_state.update(random.randint(0, 3))
+if __name__ == "__main__":
+    game_state = carGame()
+    while True:
+        game_state.frame_step((random.randint(0, 2)))
 
 # while game.carryOn:
 #     game.update()
