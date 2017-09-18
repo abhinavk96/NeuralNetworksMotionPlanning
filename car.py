@@ -1,6 +1,5 @@
 import pygame
 import math
-from PodSixNet.Connection import ConnectionListener, connection
 
 WHITE = (255, 255, 255)
 
@@ -62,16 +61,16 @@ class Car(pygame.sprite.Sprite):
         self.rect.x -= pixels
 
     def moveForward(self, pixels):
-        print(self.currentAngle, math.sin(math.radians(self.currentAngle)), math.cos(math.radians(self.currentAngle)))
+        # print(self.currentAngle, math.sin(math.radians(self.currentAngle)), math.cos(math.radians(self.currentAngle)))
         self.rect.x += pixels * math.cos(math.radians(self.currentAngle))
         self.rect.y -= pixels * math.sin(math.radians(self.currentAngle))
-        print(self.rect.topright)
+        # print(self.rect.topright)
 
     def moveBackward(self, pixels):
-        print(self.currentAngle, math.sin(math.radians(self.currentAngle)), math.cos(math.radians(self.currentAngle)))
+        # print(self.currentAngle, math.sin(math.radians(self.currentAngle)), math.cos(math.radians(self.currentAngle)))
         self.rect.x -= pixels * math.cos(math.radians(self.currentAngle))
         self.rect.y += pixels * math.sin(math.radians(self.currentAngle))
-        print(self.rect.topright)
+        # print(self.rect.topright)
 
     def rotateLeft(self, angle):
         self.currentAngle += angle

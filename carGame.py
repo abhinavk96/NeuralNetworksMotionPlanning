@@ -1,13 +1,15 @@
 import pygame
-from PodSixNet.Connection import ConnectionListener, connection
 import sys
 import time
 import math
+import random
+import numpy as np
 from car import Car
 from obstacle import Obstacle
 from goal import Goal
 
-class carGame(ConnectionListener):
+
+class carGame():
     def __init__(self):
         self.checkErrors = pygame.init()
         if self.checkErrors[1] > 0:
@@ -29,7 +31,7 @@ class carGame(ConnectionListener):
 
         self.playerCar = Car("car.png", (100, 200))
         self.all_sprites_list.add(self.playerCar)
-        self.goals = Goal("track_goal.png", (720,200))
+        self.goals = Goal("track_goal.png", (720, 200))
         self.all_sprites_list.add(self.goals)
 
         self.obstacles = {}
@@ -147,54 +149,58 @@ class carGame(ConnectionListener):
         self.carryOn = True  # Game state variable
 
         self.clock = pygame.time.Clock()
-        self.Connect()
 
-    def update(self):
-        connection.Pump()
-        self.Pump()
+    def makeMove(self, action):
+        if action == 1:
+            self.playerCar.rotateLeft(5)
+        elif action == 2:
+            self.playerCar.moveForward(5)
+        elif action == 3:
+            self.playerCar.rotateRight(5)
+        else:
+            self.playerCar.moveForward(5)
+
+    def update(self, action):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.carryOn = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x:
                     self.carryOn = False
-        self.playerCar.previousDistance=self.playerCar.getGoalDistance()
-        self.playerCar.previousAngle=self.playerCar.getAngles()
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.playerCar.rotateLeft(1)
-            # print(self.playerCar.getCurrentReward())
-            print(math.degrees(self.playerCar.getAngles()))
+        self.playerCar.previousDistance = self.playerCar.getGoalDistance()
+        self.playerCar.previousAngle = self.playerCar.getAngles()
+        # keys = pygame.key.get_pressed()
+        # if keys[pygame.K_LEFT]:
+        #     self.playerCar.rotateLeft(1)
+        #     # print(self.playerCar.getCurrentReward())
+        #     print(math.degrees(self.playerCar.getAngles()))
+        #
+        # if keys[pygame.K_RIGHT]:
+        #     self.playerCar.rotateRight(1)
+        #     print(self.playerCar.getCurrentReward())
+        #
+        # # self.screen.blit(surf,(100,100))
+        #
+        # if keys[pygame.K_UP]:
+        #     self.playerCar.moveForward(10)
+        #     print(self.playerCar.getCurrentReward())
+        #
+        #
+        # if keys[pygame.K_DOWN]:
+        #     self.playerCar.moveBackward(1)
+        #     print(self.playerCar.getCurrentReward())
+        self.makeMove(action)
 
-        if keys[pygame.K_RIGHT]:
-            self.playerCar.rotateRight(1)
-            print(self.playerCar.getCurrentReward())
-
-        # self.screen.blit(surf,(100,100))
-
-        if keys[pygame.K_UP]:
-            self.playerCar.moveForward(10)
-            print(self.playerCar.getCurrentReward())
-
-
-        if keys[pygame.K_DOWN]:
-            self.playerCar.moveBackward(1)
-            print(self.playerCar.getCurrentReward())
-
-        # reward=self.playerCar.getGoalDistance()-self.playerCar.previousDistance
-
-        if keys[pygame.K_p]:
-            print("\nTop left: ", self.playerCar.rect.topleft, "\nBottom Left:" ,self.playerCar.rect.bottomleft,"\nBottom Right:" , self.playerCar.rect.bottomright,
-                  "\nTop Right:",self.playerCar.rect.topright)
-            print("\nAngle:" ,self.playerCar.currentAngle,"\nTop Left:" ,self.playerCar.topleft, "\nBottom Left:" ,self.playerCar.bottomleft,"\nBottom Right:" , self.playerCar.bottomright,
-                  "\nTop right:",self.playerCar.topright)
-        if keys[pygame.K_g]:
-            x, y = self.playerCar.rect.x, self.playerCar.rect.y
-            print("Distance:", math.hypot(x - self.playerCar.goal[0], y - self.playerCar.goal[1]))
+        # if keys[pygame.K_p]:
+        #     print("\nTop left: ", self.playerCar.rect.topleft, "\nBottom Left:" ,self.playerCar.rect.bottomleft,"\nBottom Right:" , self.playerCar.rect.bottomright,
+        #           "\nTop Right:",self.playerCar.rect.topright)
+        #     print("\nAngle:" ,self.playerCar.currentAngle,"\nTop Left:" ,self.playerCar.topleft, "\nBottom Left:" ,self.playerCar.bottomleft,"\nBottom Right:" , self.playerCar.bottomright,
+        #           "\nTop right:",self.playerCar.topright)
+        # if keys[pygame.K_g]:
+        #     x, y = self.playerCar.rect.x, self.playerCar.rect.y
+        #     print("Distance:", math.hypot(x - self.playerCar.goal[0], y - self.playerCar.goal[1]))
 
         self.screen.blit(self.playerCar.image, self.playerCar.rect.topleft)
-
-
 
         self.playerCar.updateSensors()
         self.all_sprites_list.update()
@@ -205,18 +211,16 @@ class carGame(ConnectionListener):
         # Refresh Screen
         self.clock.tick(90)
         collision_list = pygame.sprite.spritecollide(self.playerCar, self.all_blocks_list, False)
-        if len(collision_list) > 0:
-            offset_x, offset_y = (self.playerCar.rect.left - collision_list[0].rect.left), (
-                self.playerCar.rect.top - collision_list[0].rect.top)
-            if (collision_list[0].mask.overlap(self.playerCar.mask, (offset_x, offset_y)) != None):
-                print('Collision Detected!')
-            else:
-                print('None')
+        reward = self.playerCar.previousDistance - self.playerCar.getGoalDistance()
         for car in collision_list:
-            print("Car crash!")
+            reward=-500
+            # print("Car crash!")
         # End Of Game
         # self.carryOn = False
+        state = np.array([[self.playerCar.getGoalDistance(), self.playerCar.getAngles()]])
         pygame.display.flip()
+        print(reward)   
+        return reward, state
 
 
 # Define some colors
@@ -225,11 +229,14 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BROWN = (100, 100, 100)
+#
+game_state = carGame()
+while True:
+    game_state.update(random.randint(0, 3))
 
-game = carGame()
+# while game.carryOn:
+#     game.update()
+# time.sleep(2)
+# pygame.quit()
 
-while game.carryOn:
-    game.update()
-    connection.Pump()
-time.sleep(2)
-pygame.quit()
+
