@@ -154,14 +154,14 @@ class carGame():
         self.clock = pygame.time.Clock()
 
     def makeMove(self, action):
-        if action == 1:
+        if action == 0:
             self.playerCar.rotateLeft(5)
+        elif action == 1:
+            self.playerCar.moveForward(20)
         elif action == 2:
-            self.playerCar.moveForward(5)
-        elif action == 3:
             self.playerCar.rotateRight(5)
         else:
-            self.playerCar.moveForward(5)
+            self.playerCar.moveBackward(20)
 
     def update(self, action):
         for event in pygame.event.get():
@@ -172,26 +172,26 @@ class carGame():
                     self.carryOn = False
         self.playerCar.previousDistance = self.playerCar.getGoalDistance()
         self.playerCar.previousAngle = self.playerCar.getAngles()
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_LEFT]:
-        #     self.playerCar.rotateLeft(1)
-        #     # print(self.playerCar.getCurrentReward())
-        #     # print(math.degrees(self.playerCar.getAngles()))
-        #
-        # if keys[pygame.K_RIGHT]:
-        #     self.playerCar.rotateRight(1)
-        #     # print(self.playerCar.getCurrentReward())
-        #
-        # # self.screen.blit(surf,(100,100))
-        #
-        # if keys[pygame.K_UP]:
-        #     self.playerCar.moveForward(10)
-        #     # print(self.playerCar.getCurrentReward())
-        #
-        #
-        # if keys[pygame.K_DOWN]:
-        #     self.playerCar.moveBackward(1)
-        #     # print(self.playerCar.getCurrentReward())
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.playerCar.rotateLeft(1)
+            # print(self.playerCar.getCurrentReward())
+            # print(math.degrees(self.playerCar.getAngles()))
+
+        if keys[pygame.K_RIGHT]:
+            self.playerCar.rotateRight(1)
+            # print(self.playerCar.getCurrentReward())
+
+        # self.screen.blit(surf,(100,100))
+
+        if keys[pygame.K_UP]:
+            self.playerCar.moveForward(10)
+            # print(self.playerCar.getCurrentReward())
+
+
+        if keys[pygame.K_DOWN]:
+            self.playerCar.moveBackward(1)
+            # print(self.playerCar.getCurrentReward())
 
         self.makeMove(action)
 
@@ -218,9 +218,12 @@ class carGame():
         goal_list=pygame.sprite.spritecollide(self.playerCar, self.all_goals_list, False)
 
 
-        reward = (self.playerCar.previousDistance - self.playerCar.getGoalDistance()) * 10 + math.degrees(self.playerCar.getAngles())
+        reward =  (self.playerCar.previousDistance - self.playerCar.getGoalDistance()) * 100
+        if action== 1 or action == 0:
+            reward=0
+
         for goal in goal_list:
-            reward=10000
+            reward=1000
         for car in collision_list:
             reward=-1000
 
@@ -244,7 +247,7 @@ class carGame():
             # print("Car crash!")
         # End Of Game
         # self.carryOn = False
-        state = np.array([[self.playerCar.getGoalDistance(), self.playerCar.getAngles()]])
+        state = np.array([[self.playerCar.getGoalDistance()]])
         pygame.display.flip()
         print(reward)
         return reward, state
@@ -260,7 +263,7 @@ BROWN = (100, 100, 100)
 if __name__ == "__main__":
     game_state = carGame()
     while True:
-        game_state.update((random.randint(0, 2)))
+        game_state.update((random.randint(0, 4)))
 
 # while game.carryOn:
 #     game.update()
